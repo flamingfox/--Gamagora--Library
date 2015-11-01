@@ -1,10 +1,9 @@
 #ifndef TERRAINNOISE_H
 #define TERRAINNOISE_H
 
-#include "lib/parametres.h"
 #include "terrain.h"
-#include "lib/noisegenerator.h"
-#include "lib/nrw.h"
+#include "math/noisegenerator.h"
+#include "math/nrw.h"
 
 /**
  * @brief Classe fille de Terrain. Elle s'appuis sur l'utilisation de noise pour déterminer la forme du terrain.
@@ -38,7 +37,7 @@ protected:
      * @param[in] y ordonnée du terrain (entre 0 et longueur).
      * @return la hauteur du terrain à ses coordonnées x, y.
      */
-    glm::vec3 getNormal(float x, float y, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(float x, float y, float eps = RAYON_NORMAL) const;
 
     /**
      * @brief Calcul l'élévation minimum du terrain.

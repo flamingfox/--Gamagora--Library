@@ -1,9 +1,9 @@
-#include "terrain/terraintab.h"
+#include "terraintab.h"
 
 
 
 TerrainTab::TerrainTab(const TerrainTab& copy):
-        height(copy.height),    width(copy.width),  amplitude(copy.amplitude), hauteurMin(copy.hauteurMin), hauteurMax(copy.hauteurMax)
+    height(copy.height),    width(copy.width),  amplitude(copy.amplitude), hauteurMin(copy.hauteurMin), hauteurMax(copy.hauteurMax)
 {
     longueur = copy.longueur;
     largeur = copy.largeur;
@@ -40,12 +40,12 @@ float TerrainTab::getHauteur(float x, float y) const
 
 
     x *= (width-1),    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
-    y *= (height-1);
+            y *= (height-1);
 
     int x1 = floorf(x),
-        y1 = floorf(y),
-        x2 = ceilf(x),
-        y2 = ceilf(y);
+            y1 = floorf(y),
+            x2 = ceilf(x),
+            y2 = ceilf(y);
 
     const float h11 = get(x1, y1);
 
@@ -65,11 +65,11 @@ float TerrainTab::getHauteur(float x, float y) const
 
 
 
-vec3 TerrainTab::getNormal(float x, float y, float eps) const
+Vector3D TerrainTab::getNormal(float x, float y, float eps) const
 {
 
     if(x < 0 || y < 0 || x > largeur || y > longueur)
-        return vec3(0,0,1);
+        return Vector3D(0,0,1);
 
     float ha = getHauteur(x,y);
     float   xg = std::max(x-eps, 0.f),
@@ -77,32 +77,32 @@ vec3 TerrainTab::getNormal(float x, float y, float eps) const
             yb = std::min(y+eps, longueur),
             yh = std::max(y-eps, 0.f);
     float       g = getHauteur(xg,y),
-                d = getHauteur(xd,y),
-                b = getHauteur(x,yb),
-                h = getHauteur(x,yh);
-    vec3    vg(-eps, 0, g-ha),
+            d = getHauteur(xd,y),
+            b = getHauteur(x,yb),
+            h = getHauteur(x,yh);
+    Vector3D    vg(-eps, 0, g-ha),
             vd(eps, 0, d-ha),
             vb(0, eps, b-ha),
             vh(0, -eps, h-ha);
-    float       distg = length(vg),
-                distd = length(vd),
-                distb = length(vb),
-                disth = length(vh);
-    vec3    v1 = cross(vg,vh),
-            v2 = cross(vh,vd),
-            v3 = cross(vd,vb),
-            v4 = cross(vb,vg);
-    vec3 normale(0,0,0);
+    float   distg = vg.length(),
+            distd = vd.length(),
+            distb = vb.length(),
+            disth = vh.length();
+    Vector3D v1 = vg.crossProduct(vh),
+            v2 = vh.crossProduct(vd),
+            v3 = vd.crossProduct(vb),
+            v4 = vb.crossProduct(vg);
+    Vector3D normale(0,0,0);
     if(distg*disth > 0)
-        normale += normalize(v1)*distg*disth;
+        normale += v1.normalized()*distg*disth;
     if(disth*distd > 0)
-        normale += normalize(v2)*disth*distd;
+        normale += v2.normalized()*disth*distd;
     if(distd*distb > 0)
-        normale += normalize(v3)*distd*distb;
+        normale += v3.normalized()*distd*distb;
     if(distb*distg > 0)
-        normale += normalize(v4)*distb*distg;
-    normale = normalize(normale);
-    return normale;
+        normale += v4.normalized()*distb*distg;
+
+    return normale.normalized();
 }
 
 
@@ -135,12 +135,12 @@ TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float lon
                 float x = i*(float)(img.width()-1)/(_nbWidth-1);
                 int x1 = floorf(x), x2 = ceilf(x);
                 float z = interp::interp_hermite2D(x,y,
-                                                  x1,y1,x2,y2,
-                                                  qGray(img.pixel(x1, y1))/255.0,
-                                                  qGray(img.pixel(x1, y2))/255.0,
-                                                  qGray(img.pixel(x2, y1))/255.0,
-                                                  qGray(img.pixel(x2, y2))/255.0
-                                                  );
+                                                   x1,y1,x2,y2,
+                                                   qGray(img.pixel(x1, y1))/255.0,
+                                                   qGray(img.pixel(x1, y2))/255.0,
+                                                   qGray(img.pixel(x2, y1))/255.0,
+                                                   qGray(img.pixel(x2, y2))/255.0
+                                                   );
                 grille2d[j][i] = z;
             }
         }

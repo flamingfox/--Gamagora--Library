@@ -8,7 +8,7 @@ TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
 {
     hauteurMin = minElevation();
     hauteurMax = maxElevation();
-    box.updatePoint(vec3(0,0,hauteurMax));
+    box.updatePoint(Vector3D(0,0,hauteurMax));
 }
 
 
@@ -50,7 +50,7 @@ inline float TerrainNoise::getHauteur2(float x, float y) const
     return h;
 }
 
-vec3 TerrainNoise::getNormal(float x, float y, float eps) const
+Vector3D TerrainNoise::getNormal(float x, float y, float eps) const
 {
 
     float   ha = getHauteur2(x,y);
@@ -58,24 +58,24 @@ vec3 TerrainNoise::getNormal(float x, float y, float eps) const
             d = getHauteur2(x+eps,y),
             b = getHauteur2(x,y+eps),
             h = getHauteur2(x,y-eps);
-    vec3        vg(-eps, 0, g-ha),
+    Vector3D        vg(-eps, 0, g-ha),
                 vd(eps, 0, d-ha),
                 vb(0, eps, b-ha),
                 vh(0, -eps, h-ha);
-    float   distg = length(vg),
-            distd = length(vd),
-            distb = length(vb),
-            disth = length(vh);
-    vec3        v1 = cross(vg,vh),
-                v2 = cross(vh,vd),
-                v3 = cross(vd,vb),
-                v4 = cross(vb,vg);
-    v1 = normalize(v1);
-    v2 = normalize(v2);
-    v3 = normalize(v3);
-    v4 = normalize(v4);
-    vec3 normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
-    return normalize(normale);
+    float   distg = vg.length(),
+            distd = vd.length(),
+            distb = vb.length(),
+            disth = vh.length();
+    Vector3D        v1 = vg.crossProduct(vh),
+                v2 = vh.crossProduct(vd),
+                v3 = vd.crossProduct(vb),
+                v4 = vb.crossProduct(vg);
+    v1 = v1.normalized();
+    v2 = v2.normalized();
+    v3 = v3.normalized();
+    v4 = v4.normalized();
+    Vector3D normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
+    return normale.normalized();
 }
 
 

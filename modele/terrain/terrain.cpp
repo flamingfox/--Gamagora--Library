@@ -14,19 +14,19 @@ Terrain::Terrain(float longueur, float largeur):
 Terrain::Terrain(float longueur, float largeur, float amplitude):
     longueur(longueur), largeur(largeur)
 {
-    box = Box(vec3(0,0,0),vec3(largeur,longueur,amplitude));
+    box = Box(Vector3D(0,0,0),Vector3D(largeur,longueur,amplitude));
     heatMapGradient.createDefaultHeatMapGradient();
 }
 
 /**********************************************************/
 
 
-float Terrain::getHauteur(const vec2& pointXY) const
+/*float Terrain::getHauteur(const vec2& pointXY) const
 {
     return getHauteur(pointXY.x, pointXY.y);
-}
+}*/
 
-float Terrain::getHauteur(const vec3& pointXYZ) const
+float Terrain::getHauteur(const Vector3D& pointXYZ) const
 {
     return getHauteur(pointXYZ.x, pointXYZ.y);
 }
@@ -35,13 +35,13 @@ float Terrain::getHauteur(const vec3& pointXYZ) const
 /**********************************************************/
 
 
-vec3 Terrain::getNormal(const vec2& pointXY, float eps) const
+/*Vector3D Terrain::getNormal(const vec2& pointXY, float eps) const
 {
     return getNormal(pointXY.x, pointXY.y, eps);
-}
+}*/
 
 
-vec3 Terrain::getNormal(const vec3& pointXYZ, float eps) const
+Vector3D Terrain::getNormal(const Vector3D& pointXYZ, float eps) const
 {
     return getNormal(pointXYZ.x, pointXYZ.y, eps);
 }
@@ -49,14 +49,14 @@ vec3 Terrain::getNormal(const vec3& pointXYZ, float eps) const
 /**********************************************************/
 
 
-bool Terrain::inOut(const vec3& pointXYZ) const
+bool Terrain::inOut(const Vector3D& pointXYZ) const
 {
     if(pointXYZ.z < 0)
         return false;
     float h = getHauteur(pointXYZ.x, pointXYZ.y);
     return h != HAUTEUR_HORS_MAP && pointXYZ.z <= h; //
 }
-float Terrain::potentiel(const glm::vec3& p) const
+float Terrain::potentiel(const Vector3D& p) const
 {
     return inOut(p) ?   1.f :   0.f;
 }
@@ -77,7 +77,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance, int &i) const
 
     for(i = 0;  i<128;  i++)
     {
-        vec3 pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        Vector3D pos = rayon.getOrigine() + rayon.getDirection()*coeffDistance;
         float h = getHauteur( pos );
         if(h == HAUTEUR_HORS_MAP)        {
             if(i == 0)  {
@@ -105,7 +105,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance, int &i) const
 
 
 
-/*void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::vec3& n) const
+/*void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3D& n) const
 {
     (void) n;
     heatMapGradient.getColorAtValue(hauteur, r,g,b);
@@ -116,8 +116,8 @@ void Terrain::getColor(float& r, float& g, float& b, float x, float y) const
 {
     float hauteur = getHauteur(x,y);
     hauteur /= box.diffZ();
-    vec3 normale = getNormal(x,y);
-    float pente = 1-dot(normale, vec3(0,0,1));
+    Vector3D normale = getNormal(x,y);
+    float pente = 1 - normale.dotProduct( Vector3D(0,0,1) );
 
     float roche = 3 + NoiseGenerator::perlinNoiseGradiant2(x, y, 1000) + NoiseGenerator::perlinNoiseGradiant2(x+30, y-60, 103) + NoiseGenerator::perlinNoiseGradiant2(x,y, 3);
     roche *= 0.25f+pente*0.75f;
@@ -169,7 +169,7 @@ void Terrain::getColor(float& r, float& g, float& b, float x, float y) const
 /***********************************************************************/
 
 
-float Terrain::distance(const glm::vec3& p) const
+float Terrain::distance(const Vector3D& p) const
 {
     float dist = box.distance(p);
     if(dist > 0)
@@ -194,7 +194,7 @@ float Terrain::distance(const glm::vec3& p) const
 
     for( int i=0; i<256; i++ )
     {
-        Eigen::vec3 pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        Eigen::Vector3D pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
         float h = getHauteur( pos.x, pos.y );
         if(h == HAUTEUR_HORS_MAP)
             break;

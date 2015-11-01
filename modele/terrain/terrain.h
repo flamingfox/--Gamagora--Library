@@ -2,12 +2,15 @@
 #define TERRAIN2_H
 
 #include "rendu/colorgradient.h"
-#include "lib/parametres.h"
-#include "lib/noisegenerator.h"
-#include "lib/box.h"
-#include "node.h"
+#include "math/noisegenerator.h"
+#include "geometrie/box.h"
+#include "modele/node.h"
+#include "geometrie/vector3d.h"
 
-
+/**
+  * @def HAUTEUR_HORS_MAP Code d'information pour une sortie de MAP. (cf. intersect())
+  * */
+#define HAUTEUR_HORS_MAP -9999 //code informatif sortie de map
 
 /**
  * @brief Classe virtuelle de terrain. Sert de modèle pour les classes files TerrainNoise et TerrainTab.
@@ -74,13 +77,13 @@ public:
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
      * @return la hauteur du terrain au point \e pointXY.
      */
-    float getHauteur(const vec2& pointXY) const;
+    //float getHauteur(const vec2& pointXY) const;
     /**
      * @brief Surchage de la methode getHauteur(const vec2& pointXY).
      * @param[in] pointXYZ Un point comprenant uniquement les axes \e x, \e y, \e z.
      * @return la hauteur du terrain au point \e pointXYZ.
      */
-    float getHauteur(const vec3& pointXYZ) const;
+    float getHauteur(const Vector3D& pointXYZ) const;
 
 
     /**
@@ -115,34 +118,34 @@ public:
      * @param[in] y position en \e y de la normal à déterminer.
      * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera un vecteur nul.
      */
-    virtual glm::vec3 getNormal(float x, float y, float eps = RAYON_NORMAL) const = 0;
+    virtual Vector3D getNormal(float x, float y, float eps = RAYON_NORMAL) const = 0;
     /**
      * @brief Surchage de la methode getNormal(float x, float y).
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
      * @return la normal du terrain au point \e pointXY.
      */
-    glm::vec3 getNormal(const vec2& pointXY, float eps = RAYON_NORMAL) const;
+    //Vector3D getNormal(const vec2& pointXY, float eps = RAYON_NORMAL) const;
     /**
      * @brief Surchage de la methode getHauteur(const vec2& pointXY).
      * @param[in] pointXYZ Un point comprenant uniquement les axes \e x, \e y, \e z.
      * @return la normal du terrain au point \e pointXYZ.
      */
-    glm::vec3 getNormal(const vec3& pointXYZ, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(const Vector3D& pointXYZ, float eps = RAYON_NORMAL) const;
 
     /**
      * @brief Test si le point \e pointXYZ est sous le terrain.
      * @param[in] pointXYZ un point quelconque.
      * @return Le resultat du test. Si le point pointXYZ est en dehors de la carte, la valeur sera false.
      */
-    bool inOut(const glm::vec3& pointXYZ) const;
+    bool inOut(const Vector3D& pointXYZ) const;
 
-    float distance(const glm::vec3& p) const;
-    float potentiel(const glm::vec3& p) const;
+    float distance(const Vector3D& p) const;
+    float potentiel(const Vector3D& p) const;
 
 protected:
 
 
-    //void getColor2(float& r, float& g, float& b, float hauteur = 0, const glm::vec3& n = glm::vec3(0,0,1)) const;
+    //void getColor2(float& r, float& g, float& b, float hauteur = 0, const Vector3D& n = Vector3D(0,0,1)) const;
 
     virtual float minElevation() const = 0;
     virtual float maxElevation() const = 0;

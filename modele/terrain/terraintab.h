@@ -2,7 +2,7 @@
 #define TERRAINTAB_H
 
 #include <QImage>
-#include "lib/interpolation.h"
+#include "math/interpolation.h"
 #include "terrain.h"
 
 /**
@@ -58,7 +58,7 @@ protected:
      * @param[in] y ordonnée du terrain (entre 0 et longueur).
      * @return la hauteur du terrain à ses coordonnées x, y.
      */
-    glm::vec3 getNormal(float x, float y, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(float x, float y, float eps = RAYON_NORMAL) const;
 
 private:
 
