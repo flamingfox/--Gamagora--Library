@@ -1,16 +1,16 @@
 #include "csg_box.h"
 
 CSG_Box::CSG_Box(float cote):
-    Box(glm::vec3(-cote/2,-cote/2,-cote/2), glm::vec3(cote/2,cote/2,cote/2))
+    Box(Vector3D(-cote/2,-cote/2,-cote/2), Vector3D(cote/2,cote/2,cote/2))
 {
 }
 
-CSG_Box::CSG_Box(const vec3& _min, const vec3& _max)    :
+CSG_Box::CSG_Box(const Vector3D& _min, const Vector3D& _max)    :
     Box(_min,_max)
 {
 }
 
-bool CSG_Box::inOut(const vec3& p) const
+bool CSG_Box::inOut(const Vector3D& p) const
 {
     return Box::inOut(p);
 }
@@ -23,12 +23,12 @@ bool CSG_Box::intersect(const Rayon &r, float &distanceMin) const
 }
 
 
-float CSG_Box::distance(const vec3 &p) const
+float CSG_Box::distance(const Vector3D &p) const
 {
     return Box::distance(p);
 }
 
-/*float CSG_Box::distance(const vec3 &p) const
+/*float CSG_Box::distance(const Vector3D &p) const
 {
     float dx = min.x - p.x;
     if(p.x - max.x < dx)
@@ -43,7 +43,7 @@ float CSG_Box::distance(const vec3 &p) const
         dz = p.z - max.z;*/
 
 
-vec3 CSG_Box::getNormal(const vec3& p) const
+Vector3D CSG_Box::getNormal(const Vector3D& p) const
 {
     return Box::getNormal(p);
 }

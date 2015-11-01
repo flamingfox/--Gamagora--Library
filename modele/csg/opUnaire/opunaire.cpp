@@ -10,16 +10,16 @@ OpUnaire::~OpUnaire()
     //delete a;
 }
 
-bool OpUnaire::inOut(const glm::vec3 &p) const
+bool OpUnaire::inOut(const Vector3D &p) const
 {
     return a->inOut(deplace(p));
 }
-float OpUnaire::potentiel(const glm::vec3 &p) const
+float OpUnaire::potentiel(const Vector3D &p) const
 {
     return a->potentiel(deplace(p));
 }
 
-float OpUnaire::distance(const glm::vec3 &p) const
+float OpUnaire::distance(const Vector3D &p) const
 {
     return a->distance(deplace(p));
 }

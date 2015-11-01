@@ -1,11 +1,11 @@
-#include "opUnaire/opt.h"
+#include "opt.h"
 
-OpT::OpT(Node *a, const glm::vec3& translate):
+OpT::OpT(Node *a, const Vector3D& translate):
     OpUnaire(a),   trans(translate)
 {
 }
 
-glm::vec3 OpT::deplace(const glm::vec3& p) const
+Vector3D OpT::deplace(const Vector3D& p) const
 {
     return p-trans;
 }
@@ -18,7 +18,7 @@ glm::vec3 OpT::deplace(const glm::vec3& p) const
     return a->intersect(Rayon(r.getOrigine()-trans, r.getDirection()), distanceMin);
 }*/
 
-vec3 OpT::getNormal(const vec3 &p, float eps) const
+Vector3D OpT::getNormal(const Vector3D &p, float eps) const
 {
     return a->getNormal(deplace(p), eps);
 }

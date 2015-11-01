@@ -2,24 +2,24 @@
 #define OPS_H
 
 #include "opunaire.h"
-#include "csg/csg_primitive.h"
+#include "../csg_primitive.h"
 
 
 class OpS: public OpUnaire
 {
 public:
-    OpS(Node* a, const glm::vec3& scale);
+    OpS(Node* a, const Vector3D& scale);
 
     //bool intersect(const Rayon &r, float &distanceMin) const;
-    vec3 getNormal(const vec3 &p, float eps) const;
+    Vector3D getNormal(const Vector3D &p, float eps) const;
 
-    float distance(const glm::vec3 &p) const;
+    float distance(const Vector3D &p) const;
 
 private:
-    glm::vec3 scale;
+    Vector3D scale;
 
 protected:
-    glm::vec3 deplace(const glm::vec3& p) const;
+    Vector3D deplace(const Vector3D& p) const;
 };
 
 

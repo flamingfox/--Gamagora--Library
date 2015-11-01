@@ -2,22 +2,22 @@
 #define OPT_H
 
 #include "opunaire.h"
-#include "csg/csg_primitive.h"
+#include "../csg_primitive.h"
 
 
 class OpT: public OpUnaire
 {
 public:
-    OpT(Node* a, const glm::vec3& tranlate);
+    OpT(Node* a, const Vector3D& tranlate);
 
     //bool intersect(const Rayon &r, float &distanceMin) const;
-    vec3 getNormal(const vec3 &p, float eps) const;
+    Vector3D getNormal(const Vector3D &p, float eps) const;
 
 private:
-    glm::vec3 trans;
+    Vector3D trans;
 
 protected:
-    glm::vec3 deplace(const glm::vec3& p) const;
+    Vector3D deplace(const Vector3D& p) const;
 };
 
 

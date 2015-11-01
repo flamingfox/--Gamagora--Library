@@ -1,11 +1,11 @@
 #include "opr.h"
 
-OpR::OpR(Node *a, const glm::vec3& axe, float angle):
+OpR::OpR(Node *a, const Vector3D& axe, float angle):
     OpUnaire(a),   axe(axe),   angle(angle)
 {
 }
 
-glm::vec3 OpR::deplace(const glm::vec3& p) const
+Vector3D OpR::deplace(const Vector3D& p) const
 {
 
     if(angle != 0)
@@ -14,9 +14,9 @@ glm::vec3 OpR::deplace(const glm::vec3& p) const
         return p;
 }
 
-glm::vec3 OpR::rotate(const vec3& p, float angle) const
+Vector3D OpR::rotate(const Vector3D& p, float angle) const
 {
-    glm::vec3 v;
+    Vector3D v;
         //axe2 = glm::normalize(axe);
 
         v.x =   axe.x*(axe.x*p.x + axe.y*p.y + axe.z*p.z) * (1-cos(angle))+
@@ -37,7 +37,7 @@ glm::vec3 OpR::rotate(const vec3& p, float angle) const
 
 /*bool OpR::intersect(const Rayon &r, float &distanceMin) const
 {
-    glm::vec3   o = r.getOrigine(),
+    Vector3D   o = r.getOrigine(),
                 d = r.getDirection();
 
     if(angle != 0)
@@ -72,9 +72,9 @@ glm::vec3 OpR::rotate(const vec3& p, float angle) const
 }*/
 
 
-vec3 OpR::getNormal(const vec3 &p, float eps) const
+Vector3D OpR::getNormal(const Vector3D &p, float eps) const
 {
-    vec3 n = a->getNormal(deplace(p), eps);
+    Vector3D n = a->getNormal(deplace(p), eps);
     if(angle != 0)
         n = rotate(n,angle);
     return n;

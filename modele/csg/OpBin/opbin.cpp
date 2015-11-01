@@ -12,7 +12,7 @@ OpBin::~OpBin()
     //delete b;
 }
 
-float OpBin::distance(const glm::vec3 &p) const
+float OpBin::distance(const Vector3D &p) const
 {
     return std::min(a->distance(p) , b->distance(p));
 }

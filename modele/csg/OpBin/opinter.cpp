@@ -6,18 +6,18 @@ OpInter::OpInter(Node *a, Node *b) :
 
 }
 
-bool OpInter::inOut(const glm::vec3& p) const
+bool OpInter::inOut(const Vector3D& p) const
 {
     return (a->inOut(p) && b->inOut(p));
 }
 
-float OpInter::potentiel(const glm::vec3& p) const
+float OpInter::potentiel(const Vector3D& p) const
 {
     return std::min(a->potentiel(p), b->potentiel(p));
 
 }
 
-float OpInter::distance(const glm::vec3 &p) const
+float OpInter::distance(const Vector3D &p) const
 {
     return std::min(a->distance(p), b->distance(p));
 }
@@ -37,7 +37,7 @@ float OpInter::distance(const glm::vec3 &p) const
     return false;
 }*/
 
-glm::vec3 OpInter::getNormal(const vec3& p, float eps) const
+Vector3D OpInter::getNormal(const Vector3D& p, float eps) const
 {
     return a->getNormal(p,eps);
     //à revoir
