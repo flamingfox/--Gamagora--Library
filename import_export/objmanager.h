@@ -1,25 +1,19 @@
 #ifndef OBJMANAGER_H
 #define OBJMANAGER_H
 
-#include <glm/vec3.hpp>
-
-#include "lib/voxel.h"
+#include "geometrie/vector3d.h"
+#include "modele/voxel.h"
 #include <string>
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 
-class ObjManager
+namespace ObjManager
 {
-public:
-    ObjManager();
+    void writeToObj(const std::string name, const std::vector<Vector3D>& vertex, const std::vector<unsigned int>& face);
 
-    static void voxelSave(const std::string &name, const Voxel& vox);
-
-private:
-    static void writeToObj(const std::string name, const std::vector<glm::vec3>& vertex, const std::vector<unsigned int>& face);
-
-};
+    void voxelSave(const std::string &name, const Voxel& vox);
+}
 
 #endif // OBJMANAGER_H

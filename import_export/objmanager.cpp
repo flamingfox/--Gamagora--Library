@@ -1,13 +1,33 @@
 #include "objmanager.h"
 
-ObjManager::ObjManager()
+void ObjManager::writeToObj(const std::string name, const std::vector<Vector3D> &vertex, const std::vector<unsigned int> &face)
 {
+    std::ofstream obj;
+    obj.open(name.c_str(), std::ios::out);
 
+    obj << "#vertices:\n";
+
+    for(int i = 0 ; i < vertex.size(); i++) {
+        obj << "v " << std::setprecision(4) << vertex[i].x << " " << vertex[i].y << " " << vertex[i].z << "\n";
+    }
+
+    obj << "#faces:\n";
+
+    for(int i = 0 ; i < face.size(); i += 3){
+        obj << "f " << face[i] + 1 << " " << face[i+1] + 1 << " "<< face[i+2] + 1 << "\n";
+
+    }
+
+    obj << "\n";
+
+    obj.close();
+
+    std::cout << "wrote " << name << std::endl;
 }
 
 void ObjManager::voxelSave(const std::string& name, const Voxel &vox)
 {
-    std::vector<glm::vec3> vertex;
+    std::vector<Vector3D> vertex;
     std::vector<unsigned int> face;
 
     /*
@@ -32,7 +52,7 @@ void ObjManager::voxelSave(const std::string& name, const Voxel &vox)
         for(unsigned int j=0; j<vox.get_n(); j++){
             for(unsigned int k=0; k<vox.get_n(); k++){
                 // ajout vertex
-                vertex.push_back(glm::vec3(i,j,k));
+                vertex.push_back(Vector3D(i,j,k));
             }
         }
     }
@@ -590,29 +610,3 @@ void ObjManager::voxelSave(const std::string& name, const Voxel &vox)
 
     writeToObj(name, vertex, face);
 }
-
-void ObjManager::writeToObj(const std::string name, const std::vector<glm::vec3> &vertex, const std::vector<unsigned int> &face)
-{
-    std::ofstream obj;
-    obj.open(name.c_str(), std::ios::out);
-
-    obj << "#vertices:\n";
-
-    for(int i = 0 ; i < vertex.size(); i++) {
-        obj << "v " << std::setprecision(4) << vertex[i].x << " " << vertex[i].y << " " << vertex[i].z << "\n";
-    }
-
-    obj << "#faces:\n";
-
-    for(int i = 0 ; i < face.size(); i += 3){
-        obj << "f " << face[i] + 1 << " " << face[i+1] + 1 << " "<< face[i+2] + 1 << "\n";
-
-    }
-
-    obj << "\n";
-
-    obj.close();
-
-    std::cout << "wrote " << name << std::endl;
-}
-
