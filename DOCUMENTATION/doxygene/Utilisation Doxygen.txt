@@ -1,0 +1,27 @@
+Programme en ligne de commande.
+
+Dans console faire :
+
+doxygen
+
+
+
+Fichier doxyFile déja générer et paramétrer. Utilisation automatique de ce fichier.
+
+
+TUTO :
+
+http://franckh.developpez.com/tutoriels/outils/doxygen/
+
+
+TELECHARGEMENT : 
+
+http://www.stack.nl/~dimitri/doxygen/download.html
+
+
+!!!!!! UTILISATION DE DOXYGEN WIZARD RECOMMANDEE !!!!!!!
+
+Position :	[X:\...]\doxygen\bin\doxywizard.exe
+
+
+https://www.stack.nl/~dimitri/doxygen/manual/doxywizard_usage.html
