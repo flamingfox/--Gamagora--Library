@@ -4,11 +4,6 @@
 #include "noisegenerator.h"
 
 /**
-  * @def SEED Seed utilisé pour la génération du TerrainNoise.
-  */
-#define SEED 2356839//SEED DE GÉNÉRATION DU TERRAIN : 0 - 10 000 000
-
-/**
  * fonction pour noise, ridge, warp et toutes fonction sur le terrain qui n'ont pas besoin de connaitre les caractéristiques du terrain
  */
 namespace nrw

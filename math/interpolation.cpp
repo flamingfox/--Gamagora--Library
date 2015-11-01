@@ -1,10 +1,5 @@
 #include "interpolation.h"
 
-
-
-
-using namespace glm;
-
 namespace interp
 {
 
@@ -38,14 +33,14 @@ float interp_linear2D(float xb, float zb,
         return interp_linear1D(zb, y1, y2, z1, z2);
     }
 }
-float interp_linear2D(const vec2& vb,
+/*float interp_linear2D(const vec2& vb,
                        const vec2& v1,
                        const vec2& v2,
                        float val11, float val12, float val21, float val22)
 {
     return interp_linear2D(vb.x, vb.y, v1.x, v1.y, v2.x, v2.y,
                     val11, val12, val21, val22);
-}
+}*/
 
 
 /***************************************************************************************************************************/
@@ -76,14 +71,14 @@ float interp_cos2D(float xb, float zb,
         return interp_cos1D(zb, y1, y2, z1, z2);
     }
 }
-float interp_cos2D(const vec2& vb,
+/*float interp_cos2D(const vec2& vb,
                     const vec2& v1,
                     const vec2& v2,
                     float val11, float val12, float val21, float val22)
 {
     return interp_cos2D(vb.x, vb.y, v1.x, v1.y, v2.x, v2.y,
                     val11, val12, val21, val22);
-}
+}*/
 
 /**************************************************************************************************************************/
 float interp_hermite1D(float abis, float val1, float val2, float a1, float a2)
@@ -111,13 +106,13 @@ float interp_hermite2D(float xb, float zb,
         return interp_hermite1D(zb, y1, y2, z1, z2);
     }
 }
-float interp_hermite2D(const vec2& vb,
+/*float interp_hermite2D(const vec2& vb,
                         const vec2& v1,
                         const vec2& v2,
                         float val11, float val12, float val21, float val22)
 {
     return interp_hermite2D(vb.x, vb.y, v1.x, v1.y, v2.x, v2.y,
                     val11, val12, val21, val22);
-}
+}*/
 
 } //end namespace interp

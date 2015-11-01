@@ -2,14 +2,12 @@
 #define INTERPOLATION_H
 
 #include <math.h>
-#include "glm/vec3.hpp"
-#include "glm/gtx/norm.hpp"
+#include "geometrie/vector3d.h"
+
 #ifndef M_PI
   #define M_PI 3.14159265358979323846
 #endif
 
-
-using namespace glm;
 
 /**
 * @namespace interp
@@ -82,10 +80,10 @@ float interp_linear2D(float xb, float zb,
                        float x1, float z1,
                        float x2, float z2,
                        float val11, float val12, float val21, float val22);
-float interp_linear2D(const vec2& vb,
+/*float interp_linear2D(const vec2& vb,
                        const vec2& v1,
                        const vec2& v2,
-                       float val11, float val12, float val21, float val22);
+                       float val11, float val12, float val21, float val22);*/
 
 /**
 * @brief calcul d'une valeur sur une surface cosinusoïdale entre 4 positions
@@ -105,10 +103,10 @@ float interp_cos2D(float xb, float zb,
                     float x1, float z1,
                     float x2, float z2,
                     float val11, float val12, float val21, float val22);
-float interp_cos2D(const vec2& vb,
+/*float interp_cos2D(const vec2& vb,
                     const vec2& v1,
                     const vec2& v2,
-                    float val11, float val12, float val21, float val22);
+                    float val11, float val12, float val21, float val22);*/
 
 /**
 * @brief calcul d'une valeur sur une surface d'hermite entre 4 positions
@@ -128,10 +126,10 @@ float interp_hermite2D(float xb, float zb,
                         float x1, float z1,
                         float x2, float z2,
                         float val11, float val12, float val21, float val22);
-float interp_hermite2D(const vec2& vb,
+/*float interp_hermite2D(const vec2& vb,
                         const vec2& v1,
                         const vec2& v2,
-                        float val11, float val12, float val21, float val22);
+                        float val11, float val12, float val21, float val22);*/
 
 }   //end namespace interp
 

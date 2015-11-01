@@ -2,8 +2,14 @@
 #define NOISEGENERATOR_H
 
 #include "math.h"
-#include "parametres.h"
 #include "stdlib.h"
+
+
+/**
+  * @def SEED Seed utilisé pour la génération du TerrainNoise.
+  */
+#define SEED 2356839//SEED DE GÉNÉRATION DU TERRAIN : 0 - 10 000 000
+
 
 /**
  * fonction de bruit
