@@ -1,34 +1,42 @@
 #include "box.h"
 
 
-Box::Box()  : min(vec3(FLT_MAX,FLT_MAX,FLT_MAX)), max(vec3(FLT_MIN,FLT_MIN,FLT_MIN))
+Box::Box()  : min(Vector3D(FLT_MAX,FLT_MAX,FLT_MAX)), max(Vector3D(FLT_MIN,FLT_MIN,FLT_MIN))
 {
 }
 
-Box::Box(const vec3& _min, const vec3& _max)    :   min(_min),  max(_max)
+Box::Box(const Vector3D &_min, const Vector3D &_max)    :   min(_min),  max(_max)
 {
 }
 
-Box::Box(const std::vector<vec3>& points)
+Box::Box(const std::vector<Vector3D>& points)
 {
     parcourtPoints(points);
 }
 
 
-void Box::updatePoint(const vec3& p)
+void Box::updatePoint(const Vector3D& p)
 {
     update(p);
 }
 
-bool Box::inOut(const vec3& p) const
+bool Box::inOut(const Vector3D& p) const
 {
-    for(int i = 0;  i < 3;  i++)
-    {
-        if(p[i] < min[i])
-            return false;
-        if(p[i] > max[i])
-            return false;
-    }
+    if(p.x < min.x)
+        return false;
+    if(p.x > max.x)
+        return false;
+
+    if(p.y < min.y)
+        return false;
+    if(p.y > max.y)
+        return false;
+
+    if(p.z < min.z)
+        return false;
+    if(p.z > max.z)
+        return false;
+
     return true;
 }
 
@@ -158,32 +166,41 @@ inline float Box::intersectIn(const Rayon& r) const
 
 inline void Box::setDefaultBox()
 {
-    min = vec3(FLT_MAX,FLT_MAX,FLT_MAX);
-    max = vec3(FLT_MIN,FLT_MIN,FLT_MIN);
+    min = Vector3D(FLT_MAX,FLT_MAX,FLT_MAX);
+    max = Vector3D(FLT_MIN,FLT_MIN,FLT_MIN);
 }
 
-inline void Box::update(const vec3& p)
+inline void Box::update(const Vector3D& p)
 {
     updateMin(p);
     updateMax(p);
 }
 
-inline void Box::updateMin(const vec3& p)
+inline void Box::updateMin(const Vector3D& p)
 {
-    for(int i = 0;  i < 3;  i++)
-        if(p[i] < min[i])
-            min[i] = p[i];
+    if(p.x < min.x)
+        min.x = p.x;
 
+    if(p.y < min.y)
+        min.y = p.y;
+
+    if(p.z < min.z)
+        min.z = p.z;
 }
 
-inline void Box::updateMax(const vec3& p)
+inline void Box::updateMax(const Vector3D& p)
 {
-    for(int i = 0;  i < 3;  i++)
-        if(p[i] > max[i])
-            max[i] = p[i];
+    if(p.x > max.x)
+        max.x = p.x;
+
+    if(p.y > max.y)
+        max.y = p.y;
+
+    if(p.z > max.z)
+        max.z = p.z;
 }
 
-inline void Box::parcourtPoints(const std::vector<vec3>& points)
+inline void Box::parcourtPoints(const std::vector<Vector3D>& points)
 {
     if(points.empty())
         setDefaultBox();
@@ -194,7 +211,7 @@ inline void Box::parcourtPoints(const std::vector<vec3>& points)
     }
     else
     {
-        std::vector<vec3>::const_iterator it = points.begin();
+        std::vector<Vector3D>::const_iterator it = points.begin();
         min = *it;
         max = points[points.size()-1];
 
@@ -216,7 +233,7 @@ void Box::merge(const Box& box2)
 }
 
 
-void Box::operator+=(const vec3& t)
+void Box::operator+=(const Vector3D& t)
 {
     min += t;
     max += t;
@@ -225,7 +242,7 @@ void Box::operator+=(const vec3& t)
 
 /**************************************************************************/
 
-float Box::distance(const vec3 &p) const
+float Box::distance(const Vector3D &p) const
 {
     float dx = std::max(std::max(0.f, min.x - p.x), p.x - max.x); //soit en dessous de max, soit en dessus de min, soit entre les deux (dans ce cas, distance = 0)
     float dy = std::max(std::max(0.f, min.y - p.y), p.y - max.y);
@@ -234,13 +251,13 @@ float Box::distance(const vec3 &p) const
 }
 
 
-vec3 Box::getNormal(const vec3& p) const
+Vector3D Box::getNormal(const Vector3D& p) const
 {
-    vec3 cote = (max-min); //taille des coté
-    vec3 centre(min+cote*0.5f);
-    vec3 n(p-centre);
+    Vector3D cote = max-min; //taille des coté
+    Vector3D centre(min+cote*0.5f);
+    Vector3D n(p-centre);
     n /= cote;  //la normal point dans la direction du cote le plus proche du point
-    vec3 na = abs(n);
+    Vector3D na = Vector3D(abs(n.x), abs(n.y), abs(n.z));
 
     int dir = 0;    //la normale est dans la direction de l'axe X
     if(na.x < na.y)
@@ -255,9 +272,9 @@ vec3 Box::getNormal(const vec3& p) const
 
     switch(dir)
     {
-        case 0: return (n.x < 0   ?   vec3(-1,0,0)    :   vec3(1,0,0));
-        case 1: return (n.y < 0   ?   vec3(0,-1,0)    :   vec3(0,1,0));
-        case 2: return (n.z < 0   ?   vec3(0,0,-1)    :   vec3(0,0,1));
+    case 0: return (n.x < 0   ?   Vector3D(-1,0,0)    :   Vector3D(1,0,0));
+    case 1: return (n.y < 0   ?   Vector3D(0,-1,0)    :   Vector3D(0,1,0));
+    case 2: return (n.z < 0   ?   Vector3D(0,0,-1)    :   Vector3D(0,0,1));
     }
-    return vec3(0,0,0);
+    return Vector3D(0,0,0);
 }

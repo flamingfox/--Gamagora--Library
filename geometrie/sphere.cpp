@@ -1,11 +1,11 @@
 #include "sphere.h"
 
 Sphere::Sphere():
-    Sphere(vec3(0.f,0.f,0.f), 0)
+    Sphere(Vector3D(0.f,0.f,0.f), 0)
 {
 }
 
-Sphere::Sphere(const vec3 &centre, float rayon):
+Sphere::Sphere(const Vector3D &centre, float rayon):
     centre(centre), rayon(rayon)
 {
 
@@ -14,11 +14,11 @@ Sphere::Sphere(const vec3 &centre, float rayon):
 
 bool Sphere::intersect(const Rayon& r, float& minDist, float& maxDist) const
 {
-    vec3 diff = centre-r.getOrigine();
+    Vector3D diff = centre-r.getOrigine();
 
-    vec3 l = diff*r.getDirection();
-    float diff2 = length2(diff);    //distance² entre le centre de la sphere et l'origine du rayon
-    float h2 = diff2-length2(l);    //distance² entre le centre de la sphere et son point le plus proche de ce centre sur le rayon.
+    Vector3D l = diff*r.getDirection();
+    float diff2 = diff.squareLength();    //distance² entre le centre de la sphere et l'origine du rayon
+    float h2 = diff2-l.squareLength();    //distance² entre le centre de la sphere et son point le plus proche de ce centre sur le rayon.
     if(h2> rayon*rayon)     //le point le plus plus proche sur le rayon n'ai pas dans la sphère
         return false;
 
@@ -30,7 +30,7 @@ bool Sphere::intersect(const Rayon& r, float& minDist, float& maxDist) const
     maxDist = sqrt(b2)+sqrt(a2);
     return true;
 
-    /*vec3 op = centre - r.getOrigine();		// Solve t^2*d.d + 2*t*(o-p).d + (o-p).(o-p)-R^2 = 0
+    /*Vector3D op = centre - r.getOrigine();		// Solve t^2*d.d + 2*t*(o-p).d + (o-p).(o-p)-R^2 = 0
     float t,
         b = dot(r.getDirection(),op),
         det = b * b - dot(op,op) + rayon * rayon;
@@ -48,14 +48,14 @@ bool Sphere::intersect(const Rayon& r, float& minDist, float& maxDist) const
     //return (t = b - det) >= 0 ? t : ((t = b + det) >= 0 ? t : noIntersect);
 }
 
-bool Sphere::inOut(const vec3& p) const
+bool Sphere::inOut(const Vector3D& p) const
 {
-    return distance2(p,centre) <= rayon*rayon;
+    return p.Squaredistance(centre) <= rayon*rayon;
 }
 
-float Sphere::distance(const vec3& p) const
+float Sphere::distance(const Vector3D& p) const
 {
-    float dst2 = glm::distance2(p, centre);
+    float dst2 = p.Squaredistance(centre);
 
     if(dst2 > rayon*rayon)
         return sqrt(dst2)-rayon;
@@ -71,7 +71,7 @@ float Sphere::getRayon() const
 }
 
 
-vec3 Sphere::getNormal(const vec3& p) const
+Vector3D Sphere::getNormal(const Vector3D& p) const
 {
-    return normalize(p-centre);
+    return (p-centre).normalized();
 }

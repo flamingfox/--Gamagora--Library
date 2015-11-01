@@ -1,29 +1,26 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "glm/vec3.hpp"
-#include "glm/gtx/norm.hpp"
 #include "rendu/rayon.h"
-
-using namespace glm;
+#include "geometrie/vector3d.h"
 
 class Sphere
 {
 public:
     Sphere();
-    Sphere(const vec3& centre, float rayon);
+    Sphere(const Vector3D& centre, float rayon);
 
     bool intersect(const Rayon& r, float& minDist, float& maxDist) const;
-    bool inOut(const vec3& p) const;
-    float distance(const vec3 &p) const;
+    bool inOut(const Vector3D& p) const;
+    float distance(const Vector3D &p) const;
 
-    vec3 getNormal(const vec3& p) const;
+    Vector3D getNormal(const Vector3D& p) const;
 
     float getRayon() const;
 
     protected:
 
-    vec3 centre;
+    Vector3D centre;
     float rayon;
 };
 
