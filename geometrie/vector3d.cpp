@@ -1,13 +1,5 @@
 #include "vector3d.h"
 
-Vector3D::Vector3D():x(0.0),y(0.0),z(0.0){}
-
-Vector3D::Vector3D(float a, float b):x(a),y(b),z(0.0){}
-
-Vector3D::Vector3D(float a, float b, float c):x(a),y(b),z(c){}
-
-
-
 float Vector3D::dotProduct(const Vector3D& vec2) const{
     return (x*vec2.x+y*vec2.y+z*vec2.z);
 }
@@ -16,17 +8,17 @@ Vector3D Vector3D::crossProduct(const Vector3D& vec2) const{
     return Vector3D(y*vec2.z-z*vec2.y,x*vec2.z-z*vec2.x,x*vec2.y-y*vec2.x);
 }
 
-float Vector3D::length() const{
+float Vector3D::norm() const{
     return sqrt(x*x+y*y+z*z);
 }
 
-float Vector3D::squareLength() const
+float Vector3D::squareNorm() const
 {
     return x*x+y*y+z*z;
 }
 
 void Vector3D::normalize(){
-    float len=length();
+    float len=norm();
     if(len!=0){
         x/=len;
         y/=len;
@@ -35,7 +27,7 @@ void Vector3D::normalize(){
 }
 
 Vector3D Vector3D::normalized() const{
-    float len=length();
+    float len=norm();
     if(len!=0){
         return Vector3D(x/len, y/len, z/len);
     }
@@ -110,28 +102,28 @@ Vector3D Vector3D::operator/(const Vector3D& vec2) const{
 }
 
 
-Vector3D& Vector3D::operator+=(float num){
+Vector3D& Vector3D::operator+=(const float& num){
     x+=num;
     y+=num;
     z+=num;
     return *this;
 }
 
-Vector3D& Vector3D::operator-=(float num){
+Vector3D& Vector3D::operator-=(const float& num){
     x-=num;
     y-=num;
     z-=num;
     return *this;
 }
 
-Vector3D& Vector3D::operator*=(float num){
+Vector3D& Vector3D::operator*=(const float& num){
     x*=num;
     y*=num;
     z*=num;
     return *this;
 }
 
-Vector3D& Vector3D::operator/=(float num){
+Vector3D& Vector3D::operator/=(const float& num){
     if(num!=0){
         x/=num;
         y/=num;
@@ -178,7 +170,7 @@ bool Vector3D::operator!=(const Vector3D vec2) const{
     return(!(*this==vec2));
 }
 
-Vector3D& Vector3D::rotateAboutX(float angle){
+Vector3D& Vector3D::rotateAboutX(const float& angle){
     float s = sinf(angle);
     float c = cosf(angle);
 
@@ -191,7 +183,7 @@ Vector3D& Vector3D::rotateAboutX(float angle){
     return (*this);
 }
 
-Vector3D& Vector3D::rotateAboutY(float angle){
+Vector3D& Vector3D::rotateAboutY(const float& angle){
     float s = sinf(angle);
     float c = cosf(angle);
 
@@ -204,7 +196,7 @@ Vector3D& Vector3D::rotateAboutY(float angle){
     return (*this);
 }
 
-Vector3D& Vector3D::rotateAboutZ(float angle){
+Vector3D& Vector3D::rotateAboutZ(const float& angle){
     float s = sinf(angle);
     float c = cosf(angle);
 
@@ -217,7 +209,7 @@ Vector3D& Vector3D::rotateAboutZ(float angle){
     return (*this);
 }
 
-Vector3D& Vector3D::rotateAboutAxis(float angle, const Vector3D& axis){
+Vector3D& Vector3D::rotateAboutAxis(const float& angle, const Vector3D& axis){
     float s = sinf(angle);
     float c = cosf(angle);
     float k = 1.0F - c;
@@ -238,12 +230,12 @@ Vector3D& Vector3D::rotateAboutAxis(float angle, const Vector3D& axis){
 
 float Vector3D::distance(const Vector3D &vec2) const
 {
-    return (vec2-*this).length();
+    return (vec2-*this).norm();
 }
 
 float Vector3D::Squaredistance(const Vector3D &vec2) const
 {
-    return (vec2-*this).squareLength();
+    return (vec2-*this).squareNorm();
 }
 
 std::ostream& operator<<(std::ostream& out,const Vector3D& vec){

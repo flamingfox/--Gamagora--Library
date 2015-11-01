@@ -10,14 +10,14 @@ public:
 
     float x,y,z;
 
-    Vector3D();
-    Vector3D(float a, float b);
-    Vector3D(float a, float b, float c);
+    Vector3D():x(0.0),y(0.0),z(0.0){}
+    Vector3D(float a, float b):x(a),y(b),z(0.0){}
+    Vector3D(float a, float b, float c):x(a),y(b),z(c){}
 
     float dotProduct(const Vector3D& vec2) const;
     Vector3D crossProduct(const Vector3D& vec2) const;
-    float length() const;
-    float squareLength() const;
+    float norm() const;
+    float squareNorm() const;
     void normalize();
     Vector3D normalized() const;
 
@@ -27,8 +27,14 @@ public:
     void changeY(float a);
     void changeZ(float a);
 
+    // Functions to access Vec3 class components
+    float& operator[] (int i);
+    float operator[] (int i) const;
+
+    // Unary operators
     Vector3D operator-() const;
 
+    // Binary operators
     Vector3D operator+(const float num) const;
     Vector3D operator-(const float num) const;
     Vector3D operator*(const float num) const;
@@ -39,10 +45,11 @@ public:
     Vector3D operator*(const Vector3D& vec2) const;
     Vector3D operator/(const Vector3D& vec2) const;
 
-    Vector3D& operator+=(const float num);
-    Vector3D& operator-=(const float num);
-    Vector3D& operator*=(const float num);
-    Vector3D& operator/=(const float num);
+    // Assignment operators
+    Vector3D& operator+=(const float& num);
+    Vector3D& operator-=(const float& num);
+    Vector3D& operator*=(const float& num);
+    Vector3D& operator/=(const float& num);
 
     Vector3D& operator+=(const Vector3D& vec2);
     Vector3D& operator-=(const Vector3D& vec2);
@@ -57,22 +64,22 @@ public:
      * @param angle en radiants
      * @return
      */
-    Vector3D& rotateAboutX(float angle);
+    Vector3D& rotateAboutX(const float& angle);
 
     /**
      * @brief rotateAboutY
      * @param angle en radiants
      * @return
      */
-    Vector3D& rotateAboutY(float angle);
+    Vector3D& rotateAboutY(const float& angle);
 
     /**
      * @brief rotateAboutZ
      * @param angle en radiants
      * @return
      */
-    Vector3D& rotateAboutZ(float angle);
-    Vector3D& rotateAboutAxis(float angle, const Vector3D& axis);
+    Vector3D& rotateAboutZ(const float& angle);
+    Vector3D& rotateAboutAxis(const float& angle, const Vector3D& axis);
 
     friend std::ostream& operator<<(std::ostream& out, const Vector3D& vec);
 
