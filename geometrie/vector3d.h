@@ -14,8 +14,8 @@ public:
     Vector3D(float a, float b);
     Vector3D(float a, float b, float c);
 
-    float dotProduct(const Vector3D& vec2);
-    Vector3D crossProduct(const Vector3D& vec2);
+    float dotProduct(const Vector3D& vec2) const;
+    Vector3D crossProduct(const Vector3D& vec2) const;
     float length() const;
     float squareLength() const;
     void normalize();
@@ -26,6 +26,8 @@ public:
     void changeX(float a);
     void changeY(float a);
     void changeZ(float a);
+
+    Vector3D operator-() const;
 
     Vector3D operator+(const float num) const;
     Vector3D operator-(const float num) const;

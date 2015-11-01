@@ -8,11 +8,11 @@ Vector3D::Vector3D(float a, float b, float c):x(a),y(b),z(c){}
 
 
 
-float Vector3D::dotProduct(const Vector3D& vec2){
+float Vector3D::dotProduct(const Vector3D& vec2) const{
     return (x*vec2.x+y*vec2.y+z*vec2.z);
 }
 
-Vector3D Vector3D::crossProduct(const Vector3D& vec2){
+Vector3D Vector3D::crossProduct(const Vector3D& vec2) const{
     return Vector3D(y*vec2.z-z*vec2.y,x*vec2.z-z*vec2.x,x*vec2.y-y*vec2.x);
 }
 
@@ -64,6 +64,11 @@ void Vector3D::changeY(float a){
 
 void Vector3D::changeZ(float a){
     z=a;
+}
+
+Vector3D Vector3D::operator-() const
+{
+    return Vector3D(-x,-y,-z);
 }
 
 Vector3D Vector3D::operator+(const float num) const{
