@@ -1,6 +1,8 @@
 #ifndef VOXEL_H
 #define VOXEL_H
 #include "vector"
+#include "string"
+
 class Voxel
 {
 public:
