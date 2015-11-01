@@ -84,10 +84,10 @@ Vector3D TerrainTab::getNormal(float x, float y, float eps) const
             vd(eps, 0, d-ha),
             vb(0, eps, b-ha),
             vh(0, -eps, h-ha);
-    float   distg = vg.length(),
-            distd = vd.length(),
-            distb = vb.length(),
-            disth = vh.length();
+    float   distg = vg.norm(),
+            distd = vd.norm(),
+            distb = vb.norm(),
+            disth = vh.norm();
     Vector3D v1 = vg.crossProduct(vh),
             v2 = vh.crossProduct(vd),
             v3 = vd.crossProduct(vb),

@@ -27,6 +27,6 @@ Vector3D OpS::getNormal(const Vector3D &p, float eps) const
 
 float OpS::distance(const Vector3D &p) const
 {
-    return scale.squareLength() * a->distance(deplace(p));
+    return scale.squareNorm() * a->distance(deplace(p));
     //a revoir; marche quand le redimensionnement x==y==z
 }

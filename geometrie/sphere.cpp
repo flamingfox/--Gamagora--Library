@@ -17,8 +17,8 @@ bool Sphere::intersect(const Rayon& r, float& minDist, float& maxDist) const
     Vector3D diff = centre-r.getOrigine();
 
     Vector3D l = diff*r.getDirection();
-    float diff2 = diff.squareLength();    //distance² entre le centre de la sphere et l'origine du rayon
-    float h2 = diff2-l.squareLength();    //distance² entre le centre de la sphere et son point le plus proche de ce centre sur le rayon.
+    float diff2 = diff.squareNorm();    //distance² entre le centre de la sphere et l'origine du rayon
+    float h2 = diff2-l.squareNorm();    //distance² entre le centre de la sphere et son point le plus proche de ce centre sur le rayon.
     if(h2> rayon*rayon)     //le point le plus plus proche sur le rayon n'ai pas dans la sphère
         return false;
 
