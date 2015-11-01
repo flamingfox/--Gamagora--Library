@@ -29,13 +29,13 @@ opMelange* opMelange::addPrim(Node* prim)
 
 /**********************************************************************/
 
-bool opMelange::inOut(const vec3 &p) const
+bool opMelange::inOut(const Vector3D &p) const
 {
     return potentiel(p) >= 0.5f;
 }
 
 
-float opMelange::potentiel(const glm::vec3& p) const
+float opMelange::potentiel(const Vector3D& p) const
 {
     float f = 0.f;
     for(const Node* prim : primitives)
@@ -43,7 +43,7 @@ float opMelange::potentiel(const glm::vec3& p) const
 
     return f;
 }
-float opMelange::distance(const glm::vec3& p) const
+float opMelange::distance(const Vector3D& p) const
 {
     float min = FLT_MAX;
     for(const Node* prim : primitives)  {
@@ -54,14 +54,14 @@ float opMelange::distance(const glm::vec3& p) const
     return min;
 }
 
-glm::vec3 opMelange::getNormal(const vec3& p, float eps) const
+Vector3D opMelange::getNormal(const Vector3D& p, float eps) const
 {
   float v = potentiel(p);
-  glm::vec3 n(  potentiel( glm::vec3(p.x+eps, p.y, p.z) ) - v,
-                potentiel( glm::vec3(p.x, p.y+eps, p.z) ) - v,
-                potentiel( glm::vec3(p.x, p.y, p.z+eps) ) - v);
-  /*n += vec3(potentiel( glm::vec3(p.x-eps, p.y, p.z) ) - v,
-            potentiel( glm::vec3(p.x, p.y-eps, p.z) ) - v,
-            potentiel( glm::vec3(p.x, p.y, p.z-eps) ) - v);*/
-  return -normalize(n);
+  Vector3D n(  potentiel( Vector3D(p.x+eps, p.y, p.z) ) - v,
+                potentiel( Vector3D(p.x, p.y+eps, p.z) ) - v,
+                potentiel( Vector3D(p.x, p.y, p.z+eps) ) - v);
+  /*n += Vector3D(potentiel( Vector3D(p.x-eps, p.y, p.z) ) - v,
+            potentiel( Vector3D(p.x, p.y-eps, p.z) ) - v,
+            potentiel( Vector3D(p.x, p.y, p.z-eps) ) - v);*/
+  return -n.normalized();
 }

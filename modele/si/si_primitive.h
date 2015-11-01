@@ -1,8 +1,10 @@
 #ifndef SI_PRIMITIVE_H
 #define SI_PRIMITIVE_H
 
-#include "node.h"
-#include "lib/interpolation.h"
+#include "../node.h"
+#include "math/interpolation.h"
+
+#include <algorithm>
 
 class SI_Primitive : public Node
 {
@@ -10,12 +12,12 @@ public:
     SI_Primitive();
     SI_Primitive(float e, float R);
 
-    bool inOut(const glm::vec3& p) const;
-    virtual float potentiel(const glm::vec3& p) const = 0;
+    bool inOut(const Vector3D& p) const;
+    virtual float potentiel(const Vector3D& p) const = 0;
     //virtual bool intersect(const Rayon& r, float &distance) const = 0;
-    virtual float distance(const glm::vec3& p) const =0;
+    virtual float distance(const Vector3D& p) const =0;
 
-    vec3 getNormal(const vec3& p, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(const Vector3D& p, float eps = RAYON_NORMAL) const;
 
 protected:
     float e;    //energie

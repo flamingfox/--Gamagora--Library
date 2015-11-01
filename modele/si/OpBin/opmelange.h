@@ -1,7 +1,9 @@
 #ifndef OPMELANGE_H
 #define OPMELANGE_H
 
-#include "si_primitive.h"
+#include "float.h"  //FLT_MIN FLT_MAX
+
+#include "../si_primitive.h"
 #include <vector>
 
 class opMelange : public Node
@@ -13,12 +15,12 @@ public:
     opMelange(std::vector<Node*> prims);
 
     opMelange* addPrim(Node* prim);
-    bool inOut(const vec3 &p) const;
+    bool inOut(const Vector3D &p) const;
 
-    float potentiel(const glm::vec3& p) const;
-    float distance(const glm::vec3& p) const;
+    float potentiel(const Vector3D& p) const;
+    float distance(const Vector3D& p) const;
 
-    vec3 getNormal(const vec3& p, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(const Vector3D& p, float eps = RAYON_NORMAL) const;
 
 protected:
     std::vector<Node*> primitives;

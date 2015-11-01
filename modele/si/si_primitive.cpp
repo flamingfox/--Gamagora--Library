@@ -6,11 +6,11 @@ SI_Primitive::SI_Primitive()
 
 
 SI_Primitive::SI_Primitive(float e, float R):
-        e(e), R(R)
+    e(e), R(R)
 {
 }
 
-bool SI_Primitive::inOut(const glm::vec3 &p) const
+bool SI_Primitive::inOut(const Vector3D &p) const
 {
     return potentiel(p) >= 0.5f;
 }
@@ -21,19 +21,22 @@ bool SI_Primitive::inOut(const glm::vec3 &p) const
 // R : Large radius
 float SI_Primitive::falloff( float r, float R ) const //fonction G du cours
 {
-  float x = glm::clamp(r/R,0.f,1.f);
-  float y = (1.f-x*x);
-  return y*y*y;
+    //glm::clamp(x, minVal, maxVal) = min(max(x, minVal), maxVal)
+    //float x = glm::clamp(r/R,0.f,1.f);
+
+    float x = std::min( std::max(r/R, 0.f), 1.f ) ;
+    float y = (1.f-x*x);
+    return y*y*y;
 }
 
-vec3 SI_Primitive::getNormal(const vec3& p, float eps) const
+Vector3D SI_Primitive::getNormal(const Vector3D& p, float eps) const
 {
-  float v = potentiel(p);
-  glm::vec3 n(  potentiel( glm::vec3(p.x+eps, p.y, p.z) ) - v,
-                potentiel( glm::vec3(p.x, p.y+eps, p.z) ) - v,
-                potentiel( glm::vec3(p.x, p.y, p.z+eps) ) - v);
-  /*n += vec3(potentiel( glm::vec3(p.x-eps, p.y, p.z) ) - v,
-            potentiel( glm::vec3(p.x, p.y-eps, p.z) ) - v,
-            potentiel( glm::vec3(p.x, p.y, p.z-eps) ) - v);*/
-  return -normalize(n);
+    float v = potentiel(p);
+    Vector3D n(  potentiel( Vector3D(p.x+eps, p.y, p.z) ) - v,
+                 potentiel( Vector3D(p.x, p.y+eps, p.z) ) - v,
+                 potentiel( Vector3D(p.x, p.y, p.z+eps) ) - v);
+    /*n += Vector3D(potentiel( Vector3D(p.x-eps, p.y, p.z) ) - v,
+            potentiel( Vector3D(p.x, p.y-eps, p.z) ) - v,
+            potentiel( Vector3D(p.x, p.y, p.z-eps) ) - v);*/
+    return - n.normalized();
 }

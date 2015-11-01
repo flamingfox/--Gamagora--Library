@@ -1,20 +1,22 @@
 #include "si_box.h"
 
 SI_Box::SI_Box(float cote, float e, float R):
-        SI_Box(glm::vec3(-cote/2,-cote/2,-cote/2),glm::vec3(cote/2,cote/2,cote/2), e, R)
+        SI_Box(Vector3D(-cote/2,-cote/2,-cote/2),Vector3D(cote/2,cote/2,cote/2), e, R)
 {
 }
 
-SI_Box::SI_Box(const vec3& min, const vec3& max, float e, float R):
+SI_Box::SI_Box(const Vector3D& min, const Vector3D& max, float e, float R):
         SI_Primitive(e,R), Box(min,max),    englob(Box(min-R,max+R))
 {
 }
 
-float SI_Box::potentiel(const glm::vec3& p) const
+float SI_Box::potentiel(const Vector3D& p) const
 {
-    vec3 cote = (max-min)/2.f;
+    Vector3D cote = (max-min)/2.f;
 
-    vec3 pos = glm::abs(p - (min+cote));
+    Vector3D pos = Vector3D(fabsf(p.x - (min.x+cote.x)),
+                            fabsf(p.y - (min.y+cote.y)),
+                            fabsf(p.z - (min.z+cote.z)));
     float val = 0.0;
 
     if(pos.x > cote.x)
@@ -29,7 +31,7 @@ float SI_Box::potentiel(const glm::vec3& p) const
     return e*falloff(val,R);
 }
 
-float SI_Box::distance(const glm::vec3& p) const
+float SI_Box::distance(const Vector3D& p) const
 {
     return englob.distance(p);
 }
