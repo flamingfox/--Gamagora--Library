@@ -32,7 +32,7 @@ bool Scene::rendu(){
                 bool touche = false;
 
 
-                glm::vec3 p = c->getOrigine();
+                Vector3D p = c->getOrigine();
                 int i;
                 float dist = 0;
                 for(i = 0;  i < 128;    i++)
@@ -56,11 +56,11 @@ bool Scene::rendu(){
                         img->setPixel(x,y, qRgb(dist*17, dist*19, dist*23));
                     #else
 
-                        const vec3& dRay = ray.getDirection();
-                        const vec3 p(ray.getOrigine()+dRay*dist);
-                        const vec3 n(node->getNormal(p));
+                        const Vector3D& dRay = ray.getDirection();
+                        const Vector3D p(ray.getOrigine()+dRay*dist);
+                        const Vector3D n(node->getNormal(p));
 
-                        double norm = -dot(dRay, n);    //le rayon va normalement dans le sens inverse de la normal du triangle qu'il touche,
+                        double norm = -dRay.dotProduct(n);    //le rayon va normalement dans le sens inverse de la normal du triangle qu'il touche,
 
                         QRgb color;
                         if(norm <= 0)

@@ -5,12 +5,12 @@ Rayon::Rayon()
 
 }
 
-Rayon::Rayon(const glm::vec3& origine, const glm::vec3& direction):
-        _origine(origine),  _direction(glm::normalize(direction))
+Rayon::Rayon(const Vector3D &origine, const Vector3D &direction):
+        _origine(origine),  _direction(direction.normalized())
 {
 }
 
-glm::vec3 Rayon::Reflect(const glm::vec3& normal) {
-    const float cosI = glm::dot(normal, _direction);
-    return _direction + 2*cosI * normal;
+Vector3D Rayon::Reflect(const Vector3D& normal) {
+    const float cosI = normal.dotProduct(_direction);
+    return _direction + normal * 2*cosI;
 }

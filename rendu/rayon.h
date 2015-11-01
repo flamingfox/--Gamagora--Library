@@ -1,10 +1,8 @@
 #ifndef RAYON_H
 #define RAYON_H
 
-#include <glm/vec3.hpp>
-#include "glm/gtx/norm.hpp"
 #include <math.h>
-
+#include "geometrie/vector3d.h"
 
 /**
  * @brief Classe représentant un rayon lumineux
@@ -15,11 +13,11 @@ protected:
     /**
      * @brief position d'origine du rayon.
      */
-    glm::vec3 _origine;
+    Vector3D _origine;
     /**
      * @brief direction du rayon.
      */
-    glm::vec3 _direction;
+    Vector3D _direction;
 
 public:
 
@@ -30,19 +28,19 @@ public:
      * @param[in] Position d'origine du rayon.
      * @param[in] Vecteur direction du rayon.
      */
-    Rayon(const glm::vec3& origine, const glm::vec3& direction);
+    Rayon(const Vector3D& origine, const Vector3D& direction);
 
     /**
      * @brief Calcul la direction du rayon réfléchie par rapport à une surface.
      * @param[in] normal La normale à de la surface.
      * @return Le vecteur direction du rayon après réflection.
      */
-    glm::vec3 Reflect(const glm::vec3& normal);
+    Vector3D Reflect(const Vector3D &normal);
 
-    inline glm::vec3 getOrigine()const{return _origine;}
+    inline Vector3D getOrigine()const{return _origine;}
 
-    inline glm::vec3 getDirection()const{return _direction;}
-    inline void setDirection(const glm::vec3& dir){ _direction = glm::normalize(dir);   }
+    inline Vector3D getDirection()const{return _direction;}
+    inline void setDirection(const Vector3D& dir){ _direction = dir.normalized();   }
 
 };
 

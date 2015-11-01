@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include "camera.h"
-#include "./node.h"
+#include "modele/node.h"
 #include "QTime"
 #include "colorgradient.h"
 

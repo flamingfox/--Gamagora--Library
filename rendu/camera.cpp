@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "geometrie/vector3d.h"
 
 Camera::Camera()
 {
@@ -10,28 +11,28 @@ Camera::Camera()
 @pAt vecteur direction de la caméra (comprenant distance)
 */
 
-Camera::Camera(const vec3 &pOr, const vec3 &pAt, const float &distance, int l, int h) :
+Camera::Camera(const Vector3D &pOr, const Vector3D &pAt, const float &distance, int l, int h) :
     _origine(pOr), _lu(l), _lv(h), _lw(distance)
 {
-    glm::vec3 tmp(pAt - pOr);
-    _w = glm::normalize(tmp);
+    Vector3D tmp(pAt - pOr);
+    _w = tmp.normalized();
 
-    if(_w == vec3(0.f,0.f,1.f) || _w == vec3(0.f,0.f,-1.f))
+    if(_w == Vector3D(0.f,0.f,1.f) || _w == Vector3D(0.f,0.f,-1.f))
     {
-        _u = vec3(_w.z,0.f,0.f);
-        _v = vec3(0.f,_w.z,0.f);
+        _u = Vector3D(_w.z,0.f,0.f);
+        _v = Vector3D(0.f,_w.z,0.f);
     }
     else
     {
-        _u = - ( glm::cross(_w,vec3(0.f,0.f,1.f)) );
-        _u = glm::normalize(_u);
+        _u = - ( _w.crossProduct(Vector3D(0.f,0.f,1.f)) );
+        _u.normalize();
 
-        _v = cross(_w,_u);
-        _v = glm::normalize(_v);
+        _v = _w.crossProduct(_u);
+        _v.normalize();
     }
 }
 
-vec3 Camera::vecScreen(int i, int j) const
+Vector3D Camera::vecScreen(int i, int j) const
 {
     if(i >= _lu || j >= _lv){
         std::cerr << "i or j is incorrect" << std::endl;
@@ -42,10 +43,10 @@ vec3 Camera::vecScreen(int i, int j) const
     float tj = ((float)j) / (_lv - 1);
 
 
-    return _w*_lw + ( (1.0f - ti)*(-_lu/2)+(ti*_lu/2) )*_u + ( (1.0f-tj)*(_lv/2)+(tj*(-_lv/2)) )*_v;
+    return _w*_lw + _u*( (-_lu/2)*(1.0f - ti)+(_lu/2*ti) ) + _v*( (1.0f-tj)*(_lv/2)+(tj*(-_lv/2)) );
 }
 
-vec3 Camera::pointScreen(int i, int j) const
+Vector3D Camera::pointScreen(int i, int j) const
 {
     return _origine + vecScreen(i, j);
 }

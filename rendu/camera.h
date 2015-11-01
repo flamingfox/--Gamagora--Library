@@ -5,10 +5,7 @@
 
 #include "float.h"  //FLT_MIN FLT_MAX
 #include <QDebug>
-#include <glm/vec3.hpp>
-#include "glm/gtx/norm.hpp"
-
-using namespace glm;
+#include "geometrie/vector3d.h"
 
 /**
  * @brief Une caméra utilisé pour visualiser la scène.
@@ -20,20 +17,20 @@ protected:
     /**
      * @brief Point d'origine de la caméra
      */
-    vec3 _origine;
+    Vector3D _origine;
 
     /**
      * @brief Vecteur direction en "x" du plan écran.
      */
-    vec3 _u;
+    Vector3D _u;
     /**
      * @brief Vecteur direction en "y" du plan écran.
      */
-    vec3 _v;
+    Vector3D _v;
     /**
      * @brief Vecteur direction en "z" du plan écran.
      */
-    vec3 _w;
+    Vector3D _w;
 
     /**
      * @brief Largeur en pixel de l'écran.
@@ -59,7 +56,7 @@ public:
      * @param[in] l Largeur en pixel de l'écran.
      * @param[in] h Hauteur en pixel de l'écran.
      */
-    Camera(const vec3& pOr, const vec3& pAt, const float& distance, int l, int h);
+    Camera(const Vector3D& pOr, const Vector3D& pAt, const float& distance, int l, int h);
 
     /**
      * @brief Calcul le vecteur direction entre l'origine de la caméra et le pixel (i,j) de l'écran.\n
@@ -69,7 +66,7 @@ public:
      * @return Le vecteur direction entre #_origine et le pixel (i,j).
      * @warning Si i ou j sont hors écran, le programme s'arretera.
      */
-    vec3 vecScreen(int i, int j) const;
+    Vector3D vecScreen(int i, int j) const;
     /**
      * @brief Calcul la position du pixel (i,j) de l'écran.
      * @param[in] i Indice du pixel en largeur de l'écran.
@@ -77,7 +74,7 @@ public:
      * @return La position du pixel (i,j).
      * @warning Si i ou j sont hors écran, le programme s'arretera.
      */
-    vec3 pointScreen(int i, int j) const;
+    Vector3D pointScreen(int i, int j) const;
 
     int getLu() const{
         return _lu;
@@ -87,7 +84,7 @@ public:
         return _lv;
     }
 
-    vec3 getOrigine() const{
+    Vector3D getOrigine() const{
         return _origine;
     }
 
