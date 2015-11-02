@@ -1,11 +1,11 @@
 #include "vector3d.h"
 
 float Vector3D::dotProduct(const Vector3D& vec2) const{
-    return (x*vec2.x+y*vec2.y+z*vec2.z);
+    return (x*vec2.x + y*vec2.y + z*vec2.z);
 }
 
 Vector3D Vector3D::crossProduct(const Vector3D& vec2) const{
-    return Vector3D(y*vec2.z-z*vec2.y,x*vec2.z-z*vec2.x,x*vec2.y-y*vec2.x);
+    return Vector3D(y*vec2.z - z*vec2.y , x*vec2.z - z*vec2.x , x*vec2.y - y*vec2.x);
 }
 
 float Vector3D::norm() const{
