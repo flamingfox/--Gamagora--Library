@@ -34,7 +34,7 @@ void Mesh::merge(const Mesh &delta)
 /* -------------------------------------------- */
 /* -------------------------------------------- */
 
-std::vector<point3> Mesh::getvertex() const{
+std::vector<Vector3D> Mesh::getvertex() const{
 	return vertex;
 }
 
@@ -55,7 +55,7 @@ size_t Mesh::nbface() const
 
 void Mesh::translation(const float x, const float y, const float z)
 {
-	for(point3& p: vertex){
+	for(Vector3D& p: vertex){
 		p.x+=x;
 		p.y+=y;
 		p.z+=z;
@@ -64,7 +64,23 @@ void Mesh::translation(const float x, const float y, const float z)
 
 void Mesh::rescale(float scale)
 {
-	for(point3& p: vertex){
+	for(Vector3D& p: vertex){
 		p *= scale;
 	}
+}
+
+void Mesh::rotation(const Vector3D T){
+    Rotation(T.x, T.y, T.z);
+}
+
+void Mesh::rotation(const float rX, const float rY, const float rZ){
+
+    for(size_t i=0; i<geom.size(); i++){
+        if(rX != 0)
+			geom[i].rotateAboutAxis(rX, Vector3D(1,0,0) );
+		if(rY != 0)
+			geom[i].rotateAboutAxis(rY, Vector3D(0,1,0) );
+		if(rZ != 0)
+			geom[i].rotateAboutAxis(rZ, Vector3D(0,0,1) );
+    }
 }
