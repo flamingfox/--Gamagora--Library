@@ -3,7 +3,7 @@
 
 #include "float.h"  //FLT_MIN FLT_MAX
 #include <iostream>
-#include "rendu/rayon.h"
+#include "geometrie/rayon.h"
 #include <vector>
 #include "geometrie/vector3d.h"
 
@@ -14,9 +14,9 @@ class Box
 {
 public:
 
-    Box();
+    Box()  : min(Vector3D(FLT_MAX,FLT_MAX,FLT_MAX)), max(Vector3D(FLT_MIN,FLT_MIN,FLT_MIN)) {}
 
-    Box(const Vector3D& _min, const Vector3D& _max);
+    Box(const Vector3D& _min, const Vector3D& _max)    :   min(_min),  max(_max)    {}
 
     /**
      * @brief Constructeur qui utilisera un ensemble de points pour calculer la boite englobante correspondante. \n

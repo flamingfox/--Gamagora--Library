@@ -21,21 +21,22 @@ protected:
 
 public:
 
-    Rayon();
+    Rayon() {}
 
     /**
      * @brief Constructeur paramètré.
      * @param[in] Position d'origine du rayon.
      * @param[in] Vecteur direction du rayon.
      */
-    Rayon(const Vector3D& origine, const Vector3D& direction);
+    Rayon(const Vector3D& origine, const Vector3D& direction):  _origine(origine),  _direction(direction.normalized())  {}
+
 
     /**
      * @brief Calcul la direction du rayon réfléchie par rapport à une surface.
      * @param[in] normal La normale à de la surface.
      * @return Le vecteur direction du rayon après réflection.
      */
-    Vector3D Reflect(const Vector3D &normal);
+    Vector3D Reflect(const Vector3D &normal) const;
 
     inline Vector3D getOrigine()const{return _origine;}
 

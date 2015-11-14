@@ -1,14 +1,5 @@
 #include "box.h"
 
-
-Box::Box()  : min(Vector3D(FLT_MAX,FLT_MAX,FLT_MAX)), max(Vector3D(FLT_MIN,FLT_MIN,FLT_MIN))
-{
-}
-
-Box::Box(const Vector3D &_min, const Vector3D &_max)    :   min(_min),  max(_max)
-{
-}
-
 Box::Box(const std::vector<Vector3D>& points)
 {
     parcourtPoints(points);
