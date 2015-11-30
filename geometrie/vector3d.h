@@ -11,7 +11,7 @@ public:
 
     float x,y,z;
 
-    Vector3D()  {}
+    Vector3D(): Vector3D(0,0,0)  {}
     Vector3D(float a, float b): Vector3D(a,b,0.0)    {}
     Vector3D(float a, float b, float c):    x(a),   y(b),  z(c)  {}
     Vector3D(const Vector3D& v): x(v.x), y(v.y), z(v.z)  {}
@@ -71,6 +71,7 @@ public:
     friend Vector3D operator- (const Vector3D&, float);
     friend Vector3D operator- (float, const Vector3D&);
 
+	friend Vector3D operator^ (const Vector3D&, const Vector3D&);
     friend Vector3D operator* (const Vector3D&, const Vector3D&);
     friend Vector3D operator* (const Vector3D&, float);
     friend Vector3D operator* (float, const Vector3D&);
@@ -111,7 +112,7 @@ public:
     friend float distance(const Vector3D& u, const Vector3D& v);
     friend float distance2(const Vector3D& u, const Vector3D& v);
 
-    friend Vector3D Random();
+    friend Vector3D Random3D();
 
     friend std::ostream& operator<<(std::ostream& out, const Vector3D& v);
 };
@@ -141,6 +142,9 @@ inline Vector3D operator- (float a, const Vector3D& v){
     return Vector3D(a-v.x, a-v.y, a-v.z);
 }
 
+inline Vector3D operator^ (const Vector3D& u, const Vector3D& v){
+    return Vector3D(u.y*v.z - u.z*v.y , -(u.x*v.z - u.z*v.x) , u.x*v.y - u.y*v.x);
+}
 inline Vector3D operator* (const Vector3D& u, const Vector3D& v){
     return Vector3D(u.x*v.x, u.y*v.y, u.z*v.z);
 }
@@ -246,7 +250,7 @@ inline float distance2(const Vector3D& u, const Vector3D& v){
 
 
 //! Generates a random Vector3D with precision 1e-3 within [0,1] interval
-inline Vector3D Random()
+inline Vector3D Random3d()
 {
     float x=rand()%1001/1000.0;
     float y=rand()%1001/1000.0;

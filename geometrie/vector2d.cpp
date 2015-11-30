@@ -119,24 +119,24 @@ void Vector2D::operator/= (float a){
 
 /****************************************************************************************/
 
-inline int Vector2D::operator==(const Vector2D& v) const{
+int Vector2D::operator==(const Vector2D& v) const{
     return(x==v.x && y==v.y);
 }
-inline int Vector2D::operator!=(const Vector2D& v) const{
+int Vector2D::operator!=(const Vector2D& v) const{
     return(!(*this==v));
 }
 
-inline int Vector2D::operator<(const Vector2D& v) const{
+int Vector2D::operator<(const Vector2D& v) const{
     return ((x<v.x) && (y<v.y));
 }
-inline int Vector2D::operator>(const Vector2D& v) const{
+int Vector2D::operator>(const Vector2D& v) const{
     return ((x>v.x) && (y>v.y));
 }
 
-inline int Vector2D::operator<=(const Vector2D& v) const{
+int Vector2D::operator<=(const Vector2D& v) const{
     return ((x<=v.x) && (y<=v.y));
 }
-inline int Vector2D::operator>=(const Vector2D& v) const{
+int Vector2D::operator>=(const Vector2D& v) const{
     return ((x>=v.x) && (y>=v.y));
 }
 

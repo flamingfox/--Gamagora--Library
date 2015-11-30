@@ -4,7 +4,8 @@
 #include <iostream>
 
 
-#define XY(p)  p.x, p.y
+#define XY(p)   p.x, p.y
+#define XY0(p)  p.x, p.y, 0
 
 //! \class Vector2D Vector2D.h
 //! \brief Cette classe définit des vecteurs et des sommets dans l'espace.
@@ -13,7 +14,7 @@ class Vector2D
 public:
     float x,y; //!< Coordinates
 
-    Vector2D(): x(0), y(0) { } //! Empty
+    Vector2D(): Vector2D(0,0) { } //! Empty
     Vector2D(float a, float b): x(a), y(b)  {}
     Vector2D(const Vector2D& v): x(v.x), y(v.y)  {}
     Vector2D(Vector2D&& v): x(v.x), y(v.y)  {}
@@ -96,7 +97,9 @@ public:
     friend float distance(const Vector2D& u, const Vector2D& v);
     friend float distance2(const Vector2D& u, const Vector2D& v);
 
-    friend Vector2D Random();
+    friend Vector2D Random2D();
+    friend float orientation(const Vector2D& a, const Vector2D& b, const Vector2D& c);
+
 
     friend std::ostream& operator<<(std::ostream& out, const Vector2D& v);
 };
@@ -258,11 +261,18 @@ inline float distance2(const Vector2D& u, const Vector2D& v){
 /****************************************************************************************/
 
 //! Generates a random Vector2D with precision 1e-3 within [0,1] interval
-inline Vector2D Random()
+inline Vector2D Random2D()
 {
     float x=rand()%1001/1000.0;
     float y=rand()%1001/1000.0;
     return Vector2D(x,y);
+}
+
+/**calcul l'orientation de bâc*/
+inline float orientation(const Vector2D& a, const Vector2D& b, const Vector2D& c)
+{
+    return (a.y - b.y) * (c.x - a.x) + (b.x - a.x) * (c.y - a.y);
+    //if <0 : vers la gauche, if > 0: vers la droite, if == 0: aligné
 }
 
 #endif // VECTOR2D_H

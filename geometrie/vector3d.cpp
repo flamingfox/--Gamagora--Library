@@ -37,7 +37,7 @@ void Vector3D::normalize(){
         if(len == 0)
             std::cerr << "erreur: normalized d'un Vector3D à 0" << std::endl;
     #endif
-    *this/len;
+    *this/=len;
 }
 
 Vector3D Vector3D::normalized() const{
@@ -111,24 +111,24 @@ void Vector3D::operator/=(const Vector3D& v){
 
 /****************************************************************************************/
 
-inline int Vector3D::operator==(const Vector3D& v) const{
+int Vector3D::operator==(const Vector3D& v) const{
     return(x==v.x && y==v.y && z==v.z);
 }
-inline int Vector3D::operator!=(const Vector3D& v) const{
+int Vector3D::operator!=(const Vector3D& v) const{
     return(!(*this==v));
 }
 
-inline int Vector3D::operator<(const Vector3D& v) const{
+int Vector3D::operator<(const Vector3D& v) const{
     return ((x<v.x) && (y<v.y) && (z<v.z));
 }
-inline int Vector3D::operator>(const Vector3D& v) const{
+int Vector3D::operator>(const Vector3D& v) const{
     return ((x>v.x) && (y>v.y) && (z>v.z));
 }
 
-inline int Vector3D::operator<=(const Vector3D& v) const{
+int Vector3D::operator<=(const Vector3D& v) const{
     return ((x<=v.x) && (y<=v.y) && (z<=v.z));
 }
-inline int Vector3D::operator>=(const Vector3D& v) const{
+int Vector3D::operator>=(const Vector3D& v) const{
     return ((x>=v.x) && (y>=v.y) && (z>=v.z));
 }
 
