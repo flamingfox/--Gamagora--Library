@@ -1,16 +1,23 @@
 #include "objmanager.h"
 
-Mesh loadFromOBJ(const glm::vec3 &center, const char* obj){
-    glm::vec3 minVal(1E100, 1E100, 1E100), maxVal(-1E100, -1E100, -1E100);
+Mesh ObjManager::loadFromOBJ(const Vector3D &center, const char* obj){
+
+    std::vector<Vector3D> geom;
+    std::vector<Vector3D> normalsPoints;
+    std::vector<int> topo;
+    std::vector<int> normalIds;
+
+
+    Vector3D minVal(1E100, 1E100, 1E100), maxVal(-1E100, -1E100, -1E100);
     FILE* f = fopen(obj, "r");
     while (!feof(f)) {
         char line[255];
         fgets(line, 255, f);
         if (line[0]=='v' && line[1]==' ') {
-            glm::vec3 vec;
+            Vector3D vec;
             sscanf(line, "v %lf %lf %lf\n", &vec[0], &vec[2], &vec[1]);
             vec[2] = -vec[2];
-            glm::vec3 p = vec*50.f + center;
+            Vector3D p = vec*50.f + center;
             geom.push_back(p);
             maxVal[0] = std::max(maxVal[0], p[0]);
             maxVal[1] = std::max(maxVal[1], p[1]);
@@ -20,7 +27,7 @@ Mesh loadFromOBJ(const glm::vec3 &center, const char* obj){
             minVal[2] = std::min(minVal[2], p[2]);
         }
         if (line[0]=='v' && line[1]=='n') {
-            glm::vec3 vec;
+            Vector3D vec;
             sscanf(line, "vn %lf %lf %lf\n", &vec[0], &vec[2], &vec[1]);
             vec[2] = -vec[2];
             normalsPoints.push_back(vec);
@@ -75,6 +82,15 @@ Mesh loadFromOBJ(const glm::vec3 &center, const char* obj){
     boundingSphere.R = sqrt((maxVal-minVal).sqrNorm())*0.5;*/
 
     fclose(f);
+
+    Mesh retour;
+
+    if(!geom.empty() && !topo.empty()){
+        retour.setVertex(geom);
+        retour.setFace(topo);
+    }
+
+    return retour;
 }
 
 void ObjManager::writeToObj(const std::string name, const std::vector<Vector3D> &vertex, const std::vector<unsigned int> &face)

@@ -39,7 +39,17 @@ std::vector<Vector3D> Mesh::getvertex() const{
 }
 
 std::vector<int> Mesh::getface() const{
-	return face;
+    return face;
+}
+
+void Mesh::setVertex(std::vector<Vector3D> vertex)
+{
+    this->vertex = vertex;
+}
+
+void Mesh::setFace(std::vector<int> face)
+{
+    this->face = face;
 }
 
 size_t Mesh::nbvertex() const
@@ -70,17 +80,17 @@ void Mesh::rescale(float scale)
 }
 
 void Mesh::rotation(const Vector3D T){
-    Rotation(T.x, T.y, T.z);
+    rotation(T.x, T.y, T.z);
 }
 
 void Mesh::rotation(const float rX, const float rY, const float rZ){
 
-    for(size_t i=0; i<geom.size(); i++){
+    for(size_t i=0; i<vertex.size(); i++){
         if(rX != 0)
-			geom[i].rotateAboutAxis(rX, Vector3D(1,0,0) );
+            vertex[i].rotateAboutAxis(rX, Vector3D(1,0,0) );
 		if(rY != 0)
-			geom[i].rotateAboutAxis(rY, Vector3D(0,1,0) );
+            vertex[i].rotateAboutAxis(rY, Vector3D(0,1,0) );
 		if(rZ != 0)
-			geom[i].rotateAboutAxis(rZ, Vector3D(0,0,1) );
+            vertex[i].rotateAboutAxis(rZ, Vector3D(0,0,1) );
     }
 }

@@ -12,7 +12,7 @@
 
 namespace ObjManager
 {
-	Mesh loadFromOBJ(const glm::vec3 &center, const char* obj);
+	Mesh loadFromOBJ(const Vector3D &center, const char* obj);
 	
     void writeToObj(const std::string name, const std::vector<Vector3D>& vertex, const std::vector<unsigned int>& face);
 

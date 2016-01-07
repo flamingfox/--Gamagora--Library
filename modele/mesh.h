@@ -7,7 +7,7 @@
 #include <math.h>
 #include "float.h"
 
-#include "geometrie/vector3D"
+#include "vector3d.h"
 
 #include <algorithm>
 
@@ -29,8 +29,8 @@ public :
 
     std::vector<Vector3D> getvertex() const;
     std::vector<int> getface() const;
-    void setvertex(std::vector<Vector3D> vertex);
-    void setface(std::vector<int> face);
+    void setVertex(std::vector<Vector3D> vertex);
+    void setFace(std::vector<int> face);
     size_t nbvertex() const;
     size_t nbface() const;
 
