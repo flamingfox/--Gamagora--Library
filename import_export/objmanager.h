@@ -3,6 +3,7 @@
 
 #include "geometrie/vector3d.h"
 #include "modele/voxel.h"
+#include "modele/mesh.h"
 #include <string>
 
 #include <iostream>
@@ -11,6 +12,8 @@
 
 namespace ObjManager
 {
+	Mesh loadFromOBJ(const glm::vec3 &center, const char* obj);
+	
     void writeToObj(const std::string name, const std::vector<Vector3D>& vertex, const std::vector<unsigned int>& face);
 
     void voxelSave(const std::string &name, const Voxel& vox);

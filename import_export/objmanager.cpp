@@ -1,5 +1,82 @@
 #include "objmanager.h"
 
+Mesh loadFromOBJ(const glm::vec3 &center, const char* obj){
+    glm::vec3 minVal(1E100, 1E100, 1E100), maxVal(-1E100, -1E100, -1E100);
+    FILE* f = fopen(obj, "r");
+    while (!feof(f)) {
+        char line[255];
+        fgets(line, 255, f);
+        if (line[0]=='v' && line[1]==' ') {
+            glm::vec3 vec;
+            sscanf(line, "v %lf %lf %lf\n", &vec[0], &vec[2], &vec[1]);
+            vec[2] = -vec[2];
+            glm::vec3 p = vec*50.f + center;
+            geom.push_back(p);
+            maxVal[0] = std::max(maxVal[0], p[0]);
+            maxVal[1] = std::max(maxVal[1], p[1]);
+            maxVal[2] = std::max(maxVal[2], p[2]);
+            minVal[0] = std::min(minVal[0], p[0]);
+            minVal[1] = std::min(minVal[1], p[1]);
+            minVal[2] = std::min(minVal[2], p[2]);
+        }
+        if (line[0]=='v' && line[1]=='n') {
+            glm::vec3 vec;
+            sscanf(line, "vn %lf %lf %lf\n", &vec[0], &vec[2], &vec[1]);
+            vec[2] = -vec[2];
+            normalsPoints.push_back(vec);
+        }
+        if (line[0]=='f') {
+            int i0, i1, i2;
+            int j0,j1,j2;
+            int k0,k1,k2;
+
+            int n = 0;
+            //sscanf(line, "f %u/%u/%u %u/%u/%u %u/%u/%u\n", &i0, &j0, &k0, &i1, &j1, &k1, &i2, &j2, &k2 );
+
+            //count of '/' occuration in the line
+            for (int i=0; i < sizeof(line); i++){
+                if(line[i]=='/')
+                    n++;
+            }
+
+            if(n==0){
+                sscanf(line, "f %u %u %u\n", &i0, &i1, &i2);
+
+                topo.push_back(i0-1);
+                topo.push_back(i1-1);
+                topo.push_back(i2-1);
+
+            }
+            else if(n==3){
+                sscanf(line, "f %u/%u %u/%u %u/%u\n", &i0, &k0, &i1, &k1, &i2, &k2 );
+
+                topo.push_back(i0-1);
+                topo.push_back(i1-1);
+                topo.push_back(i2-1);
+                normalIds.push_back(k0-1);
+                normalIds.push_back(k1-1);
+                normalIds.push_back(k2-1);
+
+            }
+            else if(n==6){
+                sscanf(line, "f %u/%u/%u %u/%u/%u %u/%u/%u\n", &i0, &j0, &k0, &i1, &j1, &k1, &i2, &j2, &k2 );
+
+                topo.push_back(i0-1);
+                topo.push_back(i1-1);
+                topo.push_back(i2-1);
+                normalIds.push_back(k0-1);
+                normalIds.push_back(k1-1);
+                normalIds.push_back(k2-1);
+            }
+        }
+    }
+
+    /*boundingSphere.C = 0.5*(minVal+maxVal);
+    boundingSphere.R = sqrt((maxVal-minVal).sqrNorm())*0.5;*/
+
+    fclose(f);
+}
+
 void ObjManager::writeToObj(const std::string name, const std::vector<Vector3D> &vertex, const std::vector<unsigned int> &face)
 {
     std::ofstream obj;
